@@ -8,5 +8,6 @@ namespace Gaga.Framework
 {
     public class Class1
     {
+
     }
 }
