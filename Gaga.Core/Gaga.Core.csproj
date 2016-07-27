@@ -81,6 +81,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UAParser, Version=2.1.0.0, Culture=neutral, PublicKeyToken=f7377bf021646069, processorArchitecture=MSIL">
+      <HintPath>..\packages\UAParser.2.1.0.0\lib\net40-Client\UAParser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Caching\CachingExtensions.cs" />
@@ -91,7 +95,9 @@
     <Compile Include="Caching\RedisCacheManager.cs" />
     <Compile Include="Common\CommonHelper.cs" />
     <Compile Include="Common\ComponentModel.cs" />
+    <Compile Include="Extensions\HttpContextBaseExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Extensions\StringFileExtensions.cs" />
     <Compile Include="Extensions\StructExtensions.cs" />
     <Compile Include="Common\GagaException.cs" />
     <Compile Include="Common\IWebHelper.cs" />
@@ -107,6 +113,7 @@
     <Compile Include="Utilities\FileOperate.cs" />
     <Compile Include="Utilities\HttpHelper.cs" />
     <Compile Include="Utilities\MarkdownHelper.cs" />
+    <Compile Include="Utilities\UserAgentHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
