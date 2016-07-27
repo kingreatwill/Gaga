@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using StackExchange.Profiling.Mvc;
+
 
 namespace Gaga.Framework.Attributes
 {
-	class MiniProfilerActionFilterAttribute
+	public class MiniProfilerActionFilterAttribute: ProfilingActionFilter
 	{
 	}
 }
