@@ -33,3 +33,9 @@ Jumony：类似HtmlAgilityPack框架，性能有改善
 
 #RabbitMQ.NET 队列（Queue）消息中间件
 ActiveMQ
+
+#Castle框架
+
+#.Net 三款工作流引擎比较：WWF、netBPM 和 ccflow
+
+#ORM 

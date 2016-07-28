@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Web.Mvc;
 
 namespace Gaga.Framework.ActionFilters
@@ -34,7 +29,7 @@ namespace Gaga.Framework.ActionFilters
 			}
 		}
 
-		#endregion
+		#endregion IActionFilter Members
 
 		#region IResultFilter Members
 
@@ -54,6 +49,6 @@ namespace Gaga.Framework.ActionFilters
 		{
 		}
 
-		#endregion
+		#endregion IResultFilter Members
 	}
 }

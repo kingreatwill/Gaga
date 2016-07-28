@@ -1,7 +1,7 @@
-﻿using System;
-using System.Web.Mvc;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System;
+using System.Web.Mvc;
 
 namespace Gaga.Framework.Mvc
 {
