@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionFilters\TimerActionFilter.cs" />
+    <Compile Include="Attributes\ActionPerfmonAttribute .cs" />
     <Compile Include="Attributes\MiniProfilerActionFilterAttribute.cs" />
     <Compile Include="Attributes\TimerActionFilterAttribute.cs" />
     <Compile Include="Mvc\JsonNetResult.cs" />
@@ -94,6 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mvc\Result\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="nuget.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

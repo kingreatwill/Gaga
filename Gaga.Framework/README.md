@@ -39,3 +39,12 @@ ActiveMQ
 #.Net 三款工作流引擎比较：WWF、netBPM 和 ccflow
 
 #ORM 
+
+
+#VS插件
+CodeMaid 代码整洁
+代码度量(Code Metrics)
+sql Prompt
+
+#MyMediaLite
+推荐系统中的常用算法（mathnet,c5）
