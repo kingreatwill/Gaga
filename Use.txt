@@ -1,0 +1,97 @@
+public static class AuthConfig
+    {
+        public static void RegisterAuth()
+        {
+            //registration via facebook
+            var facebooksocialData = new Dictionary<string, object> {{"divClass", "facebook"}};
+            OAuthWebSecurity.RegisterFacebookClient(
+                appId: "797437023621814",
+                appSecret: "2f5840dcfef7c6076a1ce64200b6724d",
+                displayName:"Facebook",
+                extraData: facebooksocialData);
+
+            //registration via vkontakte
+            var vkData = new Dictionary<string, object> {{"divClass", "vk"}};
+            OAuthWebSecurity.RegisterClient(
+                client: new VKontakteAuthenticationClient(
+                    "4527052",
+                    "ui24TE9jRua7C2bsFcPE"),
+                displayName: "ВКонтакте",
+                extraData: vkData);
+        }
+    }
+
+
+internal class ExternalLoginResult : ActionResult
+    {
+        public ExternalLoginResult(string provider, string returnUrl)
+        {
+            Provider = provider;
+            ReturnUrl = returnUrl;
+        }
+
+        public string Provider { get; private set; }
+        public string ReturnUrl { get; private set; }
+
+        public override void ExecuteResult(ControllerContext context)
+        {
+            OAuthWebSecurity.RequestAuthentication(Provider, ReturnUrl);
+        }
+    }
+
+[HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ExternalLogin(string provider, string returnUrl)
+        {
+            return new ExternalLoginResult(provider, Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
+        }
+
+
+        [AllowAnonymous]
+        public ActionResult ExternalLoginCallback(string returnUrl)
+        {
+         FacebookOAuth2Client.RewriteRequest();
+            AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
+            if (!result.IsSuccessful)
+            {
+                return RedirectToAction("ExternalLoginFailure");
+            }
+
+            if (OAuthWebSecurity.Login(result.Provider, result.ProviderUserId, createPersistentCookie: false))
+            {
+                string name = OAuthWebSecurity.GetUserName(result.Provider, result.ProviderUserId);
+                var user = ProfileModel.GetByLogin(name);
+                if (user.IsDeleted)
+                {
+                    WebSecurity.Logout();
+                    return RedirectToAction("Login");
+                }
+                if (!user.EmailConfirmation)
+                {
+                    WebSecurity.Logout();
+                    return View("ConfirmationMessage", model: user.Email);
+                }
+                return RedirectToLocal(returnUrl);
+            }
+
+            if (User.Identity.IsAuthenticated)
+            {
+                // If the current user is logged in add the new account
+                OAuthWebSecurity.CreateOrUpdateAccount(result.Provider, result.ProviderUserId, User.Identity.Name);
+                return RedirectToLocal(returnUrl);
+            }
+            else
+            {
+                // User is new, ask for their desired membership name
+                string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
+                ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
+                ViewBag.ReturnUrl = returnUrl;
+                if (ViewBag.ProviderDisplayName == "Facebook")
+                {
+                    return View("ConfirmExternalLogin", new RegisterExternalLoginModel { Login = result.UserName, ExternalLoginData = loginData, ExtraData = result.ExtraData
+                        ,PictureLink = string.Format("https://graph.facebook.com/{0}/picture?width=400", result.ProviderUserId)});
+                }
+                return View("ConfirmExternalLogin", new RegisterExternalLoginModel { Login = result.UserName, ExternalLoginData = loginData, ExtraData = result.ExtraData});
+            }
+        }
